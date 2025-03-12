@@ -5,8 +5,13 @@ Currently it is only used for testing how well LDAQ handles data acquisition at 
 
 ## Installation
 1. Clone the repository
-2. Install the required packages using pip
+2. Create a virtual environment & activate it
+```
+python -m venv .venv
+.venv\Scripts\activate
+```
+3. Install the required packages using pip
 ```
 pip install -r requirements.txt
 ```
-3. Run the main Jupyter notebook
+1. Run the main Jupyter notebook
