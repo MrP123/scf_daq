@@ -1,7 +1,7 @@
 # SCF DAQ
-This project does data acquisition for collecting data from smart composite fabrics (SCF) that have embedded piezoelectric strain sensors based made from PVDF foil.
+This project does data acquisition for collecting data from smart composite fabrics (SCF) that have embedded piezoelectric strain sensors fabricated from PVDF foil and Cu/Ni electrode tapes.
 
-Currently it is only used for testing how well LDAQ handles data acquisition at high sampling rates of 1 MS/s.
+Currently it is only used for testing how well LDAQ handles data acquisition at high sampling rates of 1 MS/s. The tests are carried out on a SCF structure with four embedded sensors, meaning four channels are sampled simultaneously.
 
 ## Installation
 1. Clone the repository
