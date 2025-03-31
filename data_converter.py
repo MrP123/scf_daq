@@ -19,7 +19,7 @@ def measurement_dict_to_sep005(meas_dict: Dict[str, Dict[str, Any]]):
             "unit_str": ""       #TODO: Check if it is somehow possible to retrieve the unit that was associated with the channel of the LDAQ NITask
         }
 
-        #LDAQ always a time signal
+        #LDAQ always stores a time signal
         n_samples = signal["time"].shape[0]
         n_channels = 1
 
