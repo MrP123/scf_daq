@@ -173,5 +173,8 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-
+# 
 hacks/
+
+# Ignore actual data as it is too large
+data/impacts/
