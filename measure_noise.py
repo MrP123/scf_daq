@@ -3,7 +3,12 @@ import numpy as np
 import numpy.typing as npt
 import matplotlib.pyplot as plt
 
-def configure_task(num_channels: int = 6, chassis_name: str = "cDAQ2", module_slots: list[str] = ["Mod3", "Mod4"]):
+def configure_task(num_channels: int = 6, chassis_name: str = "cDAQ2", module_slots: list[str] = ["Mod3", "Mod4"]) -> tuple[LDAQ.national_instruments.NITask, str]:
+    """
+    Configure a DAQ task like for normal collection of impact data.
+    This is intended to only be used for evaluating sensor noise within this script and not for general DAQ.
+    """
+
     input_task_name = "ni_input_task"
     acquisition_name = input_task_name + "_acq"
     fs = 1_000_000
@@ -29,7 +34,12 @@ def configure_task(num_channels: int = 6, chassis_name: str = "cDAQ2", module_sl
 
     return ni_task, acquisition_name
 
-def evaluate_noise(data, num_channels: int = 6):
+def evaluate_noise(data: dict, num_channels: int = 6) -> None:
+    """
+    Expects a dict from an acquisition that just collected sensor noise.
+    Determines RMS values for each channel, mean RMS channel and absolute max value
+    """
+
     raw_data = data["data"]
 
     def rms(data):

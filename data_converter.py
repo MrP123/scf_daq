@@ -1,8 +1,10 @@
 from typing import Any, Dict
 
-
-def measurement_dict_to_sep005(meas_dict: Dict[str, Dict[str, Any]]):
-    #https://github.com/sdypy/sdypy/blob/main/docs/seps/sep-0005.rst
+def measurement_dict_to_sep005(meas_dict: Dict[str, Dict[str, Any]]) -> dict | list[dict]:
+    """
+    This function transforms a measurement dict as provided by the normal LDAQ measuring process into a datastructure that is compliant with the SDyPy SEP005 format.
+    The format specifications are given in: https://github.com/sdypy/sdypy/blob/main/docs/seps/sep-0005.rst
+    """
 
     signals = []
 
@@ -33,7 +35,7 @@ def measurement_dict_to_sep005(meas_dict: Dict[str, Dict[str, Any]]):
 
             #TODO: Investigate the following 
             #The official documentation (https://github.com/sdypy/sdypy/blob/main/docs/seps/sep-0005.rst) actually states (n_channels, n_samples) as correct order
-            #This differs from the implementation in the assertin tool https://github.com/sdypy/sdypy-sep005-compliance
+            #This differs from the implementation in the assertion tool https://github.com/sdypy/sdypy-sep005-compliance
             #This implementation follows the assertion tool
             if data_shape == (n_samples, n_channels):
                 #correct order
