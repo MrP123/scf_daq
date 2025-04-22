@@ -6,6 +6,9 @@ import pywt
 from data_converter import measurement_dict_to_sep005
 
 class PlottingWrapper():
+    """
+    Wraps around the recorded data from LDAQ and provides some convenient plotting utilities as methods
+    """
 
     def __init__(self, full_data: dict):
         try:
@@ -24,7 +27,7 @@ class PlottingWrapper():
 
         ax.plot(time, data)
         ax.legend(self.full_data["channel_name"], loc="upper right")
-        ax.set_xlabel("Time (ms)")
+        ax.set_xlabel("Time (s)")
         ax.set_ylabel("Voltage (V)")
 
         return fig, ax
@@ -35,8 +38,8 @@ class PlottingWrapper():
         data = self.full_data["data"]
 
         ax.plot(time, data[:, channel])
-        ax.legend([self.full_data["channel_name"][channel]], loc="upper right") #wrap in add. list so that str is not unrolled
-        ax.set_xlabel("Time (ms)")
+        ax.legend([self.full_data["channel_name"][channel]], loc="upper right") #wrap in additional list so that str is not unrolled
+        ax.set_xlabel("Time (s)")
         ax.set_ylabel("Voltage (V)")
 
         return fig, ax
@@ -52,7 +55,7 @@ class PlottingWrapper():
         fig, ax = plt.subplots()
         ax.plot(time[start:end], data[start:end, :])
         ax.legend(self.full_data["channel_name"], loc="upper right")
-        ax.set_xlabel("Time (ms)")
+        ax.set_xlabel("Time (s)")
         ax.set_ylabel("Voltage (V)")
         
         return fig, ax
