@@ -176,5 +176,5 @@ cython_debug/
 # 
 hacks/
 
-# Ignore actual data as it is too large
-data/impacts/
+# Ignore actual data in its unzipped form as it is too large
+data/impacts/*/
