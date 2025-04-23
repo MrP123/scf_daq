@@ -1,7 +1,10 @@
 import LDAQ
 import numpy as np
 
-def configure_task(num_channels: int = 6, chassis_name: str = "cDAQ2", module_slots: list[str] = ["Mod3", "Mod4"]) -> tuple[LDAQ.national_instruments.NITask, str]:
+
+def configure_task(
+    num_channels: int = 6, chassis_name: str = "cDAQ2", module_slots: list[str] = ["Mod3", "Mod4"]
+) -> tuple[LDAQ.national_instruments.NITask, str]:
     """
     Configure a DAQ task like for normal collection of impact data.
     This is intended to only be used for evaluating sensor noise within this script and not for general DAQ.
@@ -28,9 +31,18 @@ def configure_task(num_channels: int = 6, chassis_name: str = "cDAQ2", module_sl
         current_device_id = device_ids[int(np.floor(i / num_channels_per_device))]
         channel_ind = int(i % num_channels_per_device)
 
-        ni_task.add_channel(channel_name=f"ch{i+1}", device_ind=current_device_id, channel_ind=channel_ind, scale=1.0, units="V", min_val=-10.0, max_val=10.0)
+        ni_task.add_channel(
+            channel_name=f"ch{i + 1}",
+            device_ind=current_device_id,
+            channel_ind=channel_ind,
+            scale=1.0,
+            units="V",
+            min_val=-10.0,
+            max_val=10.0,
+        )
 
     return ni_task, acquisition_name
+
 
 def evaluate_noise(data: dict, num_channels: int = 6) -> None:
     """
@@ -46,18 +58,18 @@ def evaluate_noise(data: dict, num_channels: int = 6) -> None:
     rms_values = np.empty((num_channels,))
     mean_values = np.empty((num_channels,))
     max_values = np.empty((num_channels,))
-    
+
     for i in range(0, num_channels):
-        current_data = raw_data[:, data["channel_names"].index(f"ch{i+1}")]
+        current_data = raw_data[:, data["channel_names"].index(f"ch{i + 1}")]
         rms_values[i] = rms(current_data)
         mean_values[i] = np.mean(current_data)
         max_values[i] = np.max(np.abs(current_data))
-    
+
         print(f"RMS of channel ch{i+1}: {rms_values[i]:.5f} V = {rms_values[i]*1e3:.2f} mV / mean: {mean_values[i]*1e3:.2f}")
-    
-    print(f"Mean RMS value is:  {np.mean(rms_values):.5f} V = {np.mean(rms_values)*1e3:.2f} mV")
-    print(f"Max value for all data is: {np.max(max_values):.5f} V = {np.max(max_values)*1e3:.2f} mV")
-    
+
+    print(f"Mean RMS value is:  {np.mean(rms_values):.5f} V = {np.mean(rms_values) * 1e3:.2f} mV")
+    print(f"Max value for all data is: {np.max(max_values):.5f} V = {np.max(max_values) * 1e3:.2f} mV")
+
     max_idx = np.argmax(rms_values)
     print(f"Estimated max noise amplitude is: {(3.3*rms_values[max_idx] + mean_values[max_idx])*1e3:.2f} mV") #Amplitude is smaller than 3.3 sigma for 99.9% of all samples would require mean to be 0
 

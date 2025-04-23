@@ -1,5 +1,6 @@
 from typing import Any, Dict
 
+
 def measurement_dict_to_sep005(meas_dict: Dict[str, Dict[str, Any]]) -> dict | list[dict]:
     """
     This function transforms a measurement dict as provided by the normal LDAQ measuring process into a datastructure that is compliant with the SDyPy SEP005 format.
@@ -13,32 +14,32 @@ def measurement_dict_to_sep005(meas_dict: Dict[str, Dict[str, Any]]) -> dict | l
             continue
 
         signal = {
-            "name": acq_name,    #TODO: Think about if the acquisition name is actually a good name for the resulting signal data
+            "name": acq_name,  # TODO: Think about if the acquisition name is actually a good name for the resulting signal data
             "data": data["data"],
             "time": data["time"],
             "fs": data["sample_rate"],
             "channel_name": data["channel_names"],
-            "unit_str": ""       #TODO: Check if it is somehow possible to retrieve the unit that was associated with the channel of the LDAQ NITask
+            "unit_str": "",  # TODO: Check if it is somehow possible to retrieve the unit that was associated with the channel of the LDAQ NITask
         }
 
-        #LDAQ always stores a time signal
+        # LDAQ always stores a time signal
         n_samples = signal["time"].shape[0]
         n_channels = 1
 
-        #multiple channels specified
+        # multiple channels specified
         if isinstance(signal["channel_name"], list):
             n_channels = len(signal["channel_name"])
 
-        #if data has more than 1 channel it is a 2D np.array
-        if(len(signal["data"].shape)) == 2:
+        # if data has more than 1 channel it is a 2D np.array
+        if (len(signal["data"].shape)) == 2:
             data_shape = signal["data"].shape
 
-            #TODO: Investigate the following 
-            #The official documentation (https://github.com/sdypy/sdypy/blob/main/docs/seps/sep-0005.rst) actually states (n_channels, n_samples) as correct order
-            #This differs from the implementation in the assertion tool https://github.com/sdypy/sdypy-sep005-compliance
-            #This implementation follows the assertion tool
+            # TODO: Investigate the following
+            # The official documentation (https://github.com/sdypy/sdypy/blob/main/docs/seps/sep-0005.rst) actually states (n_channels, n_samples) as correct order
+            # This differs from the implementation in the assertion tool https://github.com/sdypy/sdypy-sep005-compliance
+            # This implementation follows the assertion tool
             if data_shape == (n_samples, n_channels):
-                #correct order
+                # correct order
                 pass
             elif data_shape == (n_channels, n_samples):
                 signal["data"] = signal["data"].T
@@ -48,8 +49,8 @@ def measurement_dict_to_sep005(meas_dict: Dict[str, Dict[str, Any]]) -> dict | l
             assert signal["data"].shape[0] == n_samples, "data does not have same size as time"
 
         signals.append(signal)
-    
-    #SEP005 allows either a dict or a list of dicts. Return the more convenient form
+
+    # SEP005 allows either a dict or a list of dicts. Return the more convenient form
     if len(signals) == 1:
         return signals[0]
     else:
