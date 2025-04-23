@@ -1,7 +1,5 @@
 import LDAQ
 import numpy as np
-import numpy.typing as npt
-import matplotlib.pyplot as plt
 
 def configure_task(num_channels: int = 6, chassis_name: str = "cDAQ2", module_slots: list[str] = ["Mod3", "Mod4"]) -> tuple[LDAQ.national_instruments.NITask, str]:
     """
@@ -67,11 +65,11 @@ def evaluate_noise(data: dict, num_channels: int = 6) -> None:
 if __name__ == "__main__":
     num_channels = 6
 
-    print(f"Configuring task...")
+    print("Configuring task...")
     ni_task, acquisition_name = configure_task(num_channels=num_channels)
 
     # Run acquisition
-    print(f"Running acquisition...")
+    print("Running acquisition...")
     acq_ni = LDAQ.national_instruments.NIAcquisition(task_name=ni_task, acquisition_name=acquisition_name)
     ldaq = LDAQ.Core(acquisitions=acq_ni)
     ldaq.run(5.0, autostart=True, verbose=0)
@@ -80,5 +78,5 @@ if __name__ == "__main__":
     measurement = ldaq.get_measurement_dict()
     data = measurement[acquisition_name]
 
-    print(f"Evaluating noise data...")
+    print("Evaluating noise data...")
     evaluate_noise(data, num_channels=num_channels)

@@ -14,7 +14,7 @@ class PlottingWrapper():
         try:
             # data is already SEP005 compliant -> do nothing
             assert_sep005(full_data)
-        except:
+        except (TypeError, ValueError):
             # otherwise convert to SEP005 representation
             full_data = measurement_dict_to_sep005(full_data)
         finally:
