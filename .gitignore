@@ -178,3 +178,5 @@ hacks/
 
 # Ignore actual data in its unzipped form as it is too large
 data/impacts/*/
+
+RUN_ME.bat
