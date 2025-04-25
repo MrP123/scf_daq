@@ -4,7 +4,7 @@ This project is used to handle data acquisition from smart composite fabrics (SC
 Development and tests were carried out in the System Design with Advanced Composites Lab at Chung-Ang-University, Seoul.
 This repository is supposed for data perparation for the neural network based evaluation methods developed in https://github.com/MrP123/scf_nn
 
-The current test specimen is a 3D printed flat plate of size 300 mm x 120 mm with continuous carbon fibers in a [0/90] direction. The specimen contains 6 strain sensors in a 3x2 array.
+The current test specimen is a 3D printed flat plate of size 300 mm x 120 mm with continuous carbon fibers in a [0/90] direction. The specimen contains 6 strain sensors in a 3x2 array. Data acquisition is done with an NI-9178 chassis and 2 NI-9775 modules, as the high samplerate is required when extending the analysis to include damage indicators.
 
 ## Installation
 1. Clone the repository
